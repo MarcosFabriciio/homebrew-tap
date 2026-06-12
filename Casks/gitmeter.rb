@@ -1,6 +1,6 @@
 cask "gitmeter" do
-  version "0.1.4"
-  sha256 "e04d143fd9d628997a73dc3f734d56cfdadd2e8825400103fac97982e165164e"
+  version "0.1.5"
+  sha256 "60d093ade81eabd65bc2ce6ba4c6c996e446a0ddf86a16afb650658542d9928b"
 
   url "https://github.com/MarcosFabriciio/git-meter/releases/download/v#{version}/GitMeter-#{version}.zip"
   name "GitMeter"
@@ -16,15 +16,27 @@ cask "gitmeter" do
 
   app "GitMeter.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/GitMeter.app"]
+  end
+
   zap trash: [
     "~/Library/Application Support/com.marcosfabriciio.GitMeter",
     "~/Library/Preferences/com.marcosfabriciio.GitMeter.plist",
   ]
 
   caveats <<~EOS
-    App assinado ad-hoc (sem notarização da Apple). Instale com:
-      brew install --cask --no-quarantine MarcosFabriciio/tap/gitmeter
-    Se já instalou e o macOS bloquear: xattr -dr com.apple.quarantine /Applications/GitMeter.app
+    App assinado ad-hoc (sem notarização da Apple). O cask remove o atributo
+    de quarentena automaticamente após a instalação, então o app abre normalmente.
+
+    Para instalar:
+      brew install --cask MarcosFabriciio/tap/gitmeter
+
+    Se o Gatekeeper ainda bloquear após a instalação, execute:
+      xattr -dr com.apple.quarantine /Applications/GitMeter.app
+    Ou acesse Ajustes do Sistema → Privacidade e Segurança → "Abrir mesmo assim".
+
     Por padrão usa o token do gh CLI (brew install gh && gh auth login),
     ou configure um PAT (escopo repo) nos Ajustes do app.
   EOS
