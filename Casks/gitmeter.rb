@@ -1,6 +1,6 @@
 cask "gitmeter" do
-  version "0.1.3"
-  sha256 "ccf091939b59a3d81c039855ad2b2076af8eca3de3e8648cc50a049d3fd226c7"
+  version "0.1.4"
+  sha256 "e04d143fd9d628997a73dc3f734d56cfdadd2e8825400103fac97982e165164e"
 
   url "https://github.com/MarcosFabriciio/git-meter/releases/download/v#{version}/GitMeter-#{version}.zip"
   name "GitMeter"
